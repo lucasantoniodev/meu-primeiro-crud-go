@@ -2,16 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
-	"log"
+	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/configuration/env"
 	"os"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	env.LoadEnvSettings()
 
-	fmt.Println(os.Getenv("TEST "))
+	fmt.Println(os.Getenv("TEST"))
 }
