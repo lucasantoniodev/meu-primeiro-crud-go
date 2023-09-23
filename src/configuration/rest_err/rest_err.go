@@ -2,6 +2,25 @@ package rest_err
 
 import "net/http"
 
+/*
+	Em GO se você criar uma struct com um método implementado a esta struct e existir uma
+	interface com a mesma caracteristica, o GO vai assumir que a struct está implementando
+	a interface.
+
+	Interface a ser implementada:
+
+	type error interface {
+		Error() string
+	}
+*/
+
+// Causes -> Estrutura para causas de erro
+type Causes struct {
+	Field   string `json:"field,omitempty"`
+	Message string `json:"message,omitempty"`
+}
+
+// RestErr -> Estrutura JSON para erros
 type RestErr struct {
 	Message string   `json:"message,omitempty"`
 	Err     string   `json:"error,omitempty"`
@@ -9,15 +28,12 @@ type RestErr struct {
 	Causes  []Causes `json:"causes,omitempty"`
 }
 
-type Causes struct {
-	Field   string `json:"field,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
+// Error -> Implementação de interface para sobre-escrever método Error() do GO;
 func (r *RestErr) Error() string {
 	return r.Message
 }
 
+// NewRestErr -> Método para gerar estrutura de Erro
 func NewRestErr(message, err string, code int, causes []Causes) *RestErr {
 	return &RestErr{
 		Message: message,

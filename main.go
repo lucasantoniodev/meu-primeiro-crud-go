@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/configuration/env"
-	"os"
+	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/controller/routes"
 )
 
 func main() {
 	env.LoadEnvSettings()
 
-	fmt.Println(os.Getenv("TEST"))
+	routes.RunServer(":8080")
 }
