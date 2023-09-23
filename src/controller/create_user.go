@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/configuration/rest_err"
 	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/controller/model/request"
@@ -18,10 +17,11 @@ para ser bindado por JSON, usandos o "&" pois queremos que o valor seja alterado
 */
 func CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
-	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		restErr := rest_err.NewBadRequestError(
-			fmt.Sprintf("There are some incorrect fields, error = %s", err.Error()))
 
+	if err := c.ShouldBindJSON(&userRequest); err != nil {
+		restErr := rest_err.NewBadRequestValidationError(
+			"There are some incorrect fields",
+			nil)
 		c.JSON(restErr.Code, restErr)
 		return
 	}
