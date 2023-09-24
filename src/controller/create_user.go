@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/configuration/rest_err"
+	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/configuration/validation"
 	"github.com/lucasantoniodev/meu-primeiro-crud-go/src/controller/model/request"
 	"net/http"
 )
@@ -19,9 +19,7 @@ func CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		restErr := rest_err.NewBadRequestValidationError(
-			"There are some incorrect fields",
-			nil)
+		restErr := validation.ValidateUserError(err)
 		c.JSON(restErr.Code, restErr)
 		return
 	}
